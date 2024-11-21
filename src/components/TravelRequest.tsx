@@ -26,7 +26,7 @@ const TravelRequest: React.FC = () => {
 
   return (
     <div>
-      <h1 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl mb-14 mt-20'
+      <h1 className='text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl mb-14 mt-20'
       >Solicitação de Viagem</h1>
       <form className='flex flex-col items-center space-y-8 w-full max-w-lg mx-auto'>
         <div className='flex justify-center' >

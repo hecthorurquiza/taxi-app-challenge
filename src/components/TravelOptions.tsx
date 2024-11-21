@@ -29,7 +29,7 @@ const TravelOptions: React.FC = () => {
 
   return (
     <div>
-      <h1 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl mb-14 mt-20'
+      <h1 className='text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl mb-14 mt-20'
       >Opções de Viagem</h1>
       
       <div className='mb-10' id="map">Mapa estático com a rota</div>
