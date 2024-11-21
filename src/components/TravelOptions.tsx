@@ -1,8 +1,8 @@
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const TravelOptions: React.FC = () => {
-  // const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { data } = location.state || { data: {} };
   // Dados fictícios para exibição
@@ -12,9 +12,7 @@ const TravelOptions: React.FC = () => {
   ];
 
   const handleChooseDriver = async (driverId: number) => {
-    console.log(data);
-    console.log(drivers[driverId]);
-  
+    navigate('/historico');
     // try {
     //   const response = await fetch('/api/confirm', {
     //     method: 'POST',
