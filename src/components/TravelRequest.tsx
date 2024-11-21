@@ -8,11 +8,7 @@ const TravelRequest: React.FC = () => {
   const navigate = useNavigate();
 
   const handleEstimate = async () => {
-    console.log(userId);
-    console.log(origin);
-    console.log(destination);
-    
-    // navigate('/opcoes', { state: { data: { userId, origin, destination } } });
+    navigate('/opcoes', { state: { data: { userId, origin, destination } } });
     // try {
     //   const response = await fetch('/api/estimate', {
     //     method: 'POST',
