@@ -8,19 +8,24 @@ const TravelRequest: React.FC = () => {
   const navigate = useNavigate();
 
   const handleEstimate = async () => {
-    try {
-      const response = await fetch('/api/estimate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, origin, destination })
-      });
-      const data = await response.json();
-      // Redirecionar para a tela de opções de viagem com os dados recebidos
-      navigate('/opcoes', { state: { data } });
-    } catch (error) {
-      console.error('Erro ao estimar viagem:', error);
-      // Exibir mensagem de erro para o usuário
-    }
+    console.log(userId);
+    console.log(origin);
+    console.log(destination);
+    
+    // navigate('/opcoes', { state: { data: { userId, origin, destination } } });
+    // try {
+    //   const response = await fetch('/api/estimate', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ userId, origin, destination })
+    //   });
+    //   const data = await response.json();
+    //   // Redirecionar para a tela de opções de viagem com os dados recebidos
+    //   navigate('/opcoes', { state: { data } });
+    // } catch (error) {
+    //   console.error('Erro ao estimar viagem:', error);
+    //   // Exibir mensagem de erro para o usuário
+    // }
   };
 
   return (
