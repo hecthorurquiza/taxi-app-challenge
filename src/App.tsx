@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import TravelRequest from './components/TravelRequest';
 import TravelOptions from './components/TravelOptions';
 import TravelHistory from './components/TravelHistory';
-import './App.css'; // Import the CSS file
+import './App.css';
 
 const App: React.FC = () => {
   return (
