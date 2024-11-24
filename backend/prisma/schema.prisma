@@ -18,7 +18,8 @@ model Driver {
   name        String @db.VarChar(150)
   description String @db.Text
   car         String @db.VarChar(150)
-  rating      String @db.VarChar(250)
+  rating      String @db.VarChar(10)
+  comment     String @db.VarChar(250)
   fare        Float
   minKm       Float  @map("min_km")
   trips       Trip[]

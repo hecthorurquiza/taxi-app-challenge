@@ -1,7 +1,6 @@
 // @ts-check
 
 import eslint from '@eslint/js'
-import { off } from 'process'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
@@ -10,6 +9,7 @@ export default tseslint.config(
       'quotes': ['error', 'single'],
       'no-useless-escape': ['warn'],
       'no-inner-declarations': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
 		  'indent': ['warn', 2 ],
 		  'global-require': 'warn',
 		  'semi': ['warn', 'never'],
