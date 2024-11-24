@@ -1,0 +1,24 @@
+{
+	"routes": [
+		{
+			"legs": [
+				{
+					"startLocation": {
+						"latLng": {
+							"latitude": 37.4227804,
+							"longitude": -122.08412609999999
+						}
+					},
+					"endLocation": {
+						"latLng": {
+							"latitude": 37.7353976,
+							"longitude": -122.50666500000001
+						}
+					}
+				}
+			],
+			"distanceMeters": 57498,
+			"duration": "2403s"
+		}
+	]
+}
