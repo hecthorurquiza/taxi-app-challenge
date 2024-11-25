@@ -13,7 +13,7 @@ export class ConfirmRideUseCase {
     const driverDB = await this.driverRepository.findById(data.driver.id)
 
     if (!driverDB) throw new Error(`Motorista não encontrado para o id = ${data.driver.id}`)
-    if (driverDB.minKm > data.distance) throw new Error('Quilometragem inválida para o motorista')
+    if (driverDB.minKm > (data.distance / 1000)) throw new Error('Quilometragem inválida para o motorista')
 
     const success = await this.tripRepository.save(new Trip({
       origin: data.origin,

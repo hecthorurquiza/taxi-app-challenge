@@ -1,6 +1,6 @@
 import { Driver } from '~/entities/Driver'
 import { IDriverRepository } from '../IDriverRepository'
-import { prismaClient } from '~/prismaClient'
+import { prismaClient } from '~/utils/prismaClient'
 
 export class DriverRepository implements IDriverRepository {
   async findMany(distance: number): Promise<Driver[]> {

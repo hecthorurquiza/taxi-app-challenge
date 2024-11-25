@@ -1,6 +1,7 @@
 // @ts-check
 
 import eslint from '@eslint/js'
+import { all } from 'node_modules/axios/index.cjs'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
@@ -10,6 +11,7 @@ export default tseslint.config(
       'no-useless-escape': ['warn'],
       'no-inner-declarations': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      'no-explicit-any': 'off',
 		  'indent': ['warn', 2 ],
 		  'global-require': 'warn',
 		  'semi': ['warn', 'never'],
@@ -26,17 +28,17 @@ export default tseslint.config(
         }
       ],
 		  'max-depth': ['warn', 3],
-		  'no-unused-vars': [
-			  'error',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
         {
-          'vars': 'all',
-          'args': 'none',
+          'args': 'all',
+          'caughtErrors': 'all',
           'ignoreRestSiblings': true
         }
       ],
 		  'no-console': 'off',
 		  'no-prototype-builtins': ['warn'],
-		  'no-mixed-spaces-and-tabs': ['warn'],
+		  'no-mixed-spaces-and-tabs': 'off',
 		  'no-extra-semi': ['warn'],
 		  'no-trailing-spaces': 'error',
 		  'consistent-return': 'warn',

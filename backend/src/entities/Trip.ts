@@ -1,3 +1,5 @@
+import { Driver } from '@prisma/client'
+
 export class Trip {
   public readonly id: number
   public date: Date
@@ -8,6 +10,7 @@ export class Trip {
   public value: number
   public customerId: string
   public driverId: number
+  public driver: Driver
 
   constructor(props: Partial<Trip>) {
     Object.assign(this, props)

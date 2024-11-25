@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { EstimateRideUseCase } from './EstimateRideUseCase'
 import { IEstimateRouteRequestDTO } from './EstimateRouteDTO'
-import { sendErrorInvalidData } from '~/utils/error'
+import { sendErrorMessage } from '~/utils/error'
 
 export class EstimateRideController {
   constructor(private estimateRideUseCase: EstimateRideUseCase) {}
@@ -23,10 +23,18 @@ export class EstimateRideController {
   }
 
   private validadeRequest(data: IEstimateRouteRequestDTO, res: Response) {
-    if (!data.customerId) return sendErrorInvalidData(res, 'O ID do usuário não pode estar em branco.')
-    if (!data.origin) return sendErrorInvalidData(res, 'O endereço de origem não pode estar em branco.')
-    if (!data.destination) return sendErrorInvalidData(res, 'O endereço de destino não pode estar em branco.')
-    if (data.destination === data.origin) return sendErrorInvalidData(res, 'O endereço de origem e destino não podem ser iguais.')
+    if (!data.customerId) return sendErrorMessage(
+      res, 400, 'INVALID_DATA', 'O ID do usuário não pode estar em branco.'
+    )
+    if (!data.origin) return sendErrorMessage(
+      res, 400, 'INVALID_DATA', 'O endereço de origem não pode estar em branco.'
+    )
+    if (!data.destination) return sendErrorMessage(
+      res, 400, 'INVALID_DATA', 'O endereço de destino não pode estar em branco.'
+    )
+    if (data.destination === data.origin) return sendErrorMessage(
+      res, 400, 'INVALID_DATA', 'O endereço de origem e destino não podem ser iguais.'
+    )
 
     return null
   }
