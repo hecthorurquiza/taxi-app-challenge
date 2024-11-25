@@ -32,8 +32,9 @@ model Trip {
   destination String   @db.VarChar(150)
   distance    Float
   duration    String   @db.VarChar(100)
-  driverId    Int      @map("driver_id")
   value       Float
+  customerId  String   @map("customer_id") @db.VarChar(50)
+  driverId    Int      @map("driver_id")
 
   driver Driver @relation(fields: [driverId], references: [id])
 

@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "strictPropertyInitialization": false,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "removeComments": true,
     "target": "ES2022",                          
     "module": "Node16",
     "strict": true,
