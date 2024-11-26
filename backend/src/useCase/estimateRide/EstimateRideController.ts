@@ -11,7 +11,7 @@ export class EstimateRideController {
 
     const error = this.validadeRequest({ customerId: customer_id, origin, destination }, res)
     if (error) return error
-
+    
     const estimateResp = await this.estimateRideUseCase.execute(
       {
         customerId: customer_id,
