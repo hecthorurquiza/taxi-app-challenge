@@ -4,10 +4,12 @@ import TravelRequest from './components/TravelRequest';
 import TravelOptions from './components/TravelOptions';
 import TravelHistory from './components/TravelHistory';
 import './App.css';
+import { Toaster } from 'react-hot-toast';
 
 const App: React.FC = () => {
   return (
     <Router>
+      <Toaster />
       <Routes>
         <Route path='/solicitacao' element={<TravelRequest />} />
         <Route path='/opcoes' element={<TravelOptions />} />

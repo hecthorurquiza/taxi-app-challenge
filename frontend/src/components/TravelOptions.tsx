@@ -1,57 +1,70 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useRideConfirm, IDriver } from '../hooks/useRide';
 
 const TravelOptions: React.FC = () => {
-  const navigate = useNavigate();
   const location = useLocation();
-  const { data } = location.state || { data: {} };
-  // Dados fictícios para exibição
-  const drivers = [
-    { name: 'Motorista 1', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ornare augue magna, fermentum aliquet nisl consectetur vel. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla ut nisl dui. Fusce eu metus erat. Aenean eget mauris at quam ultricies tristique ac eu lectus.', vehicle: 'Veículo 1', rating: 4.5, price: 50 },
-    { name: 'Motorista 2', description: 'Descrição 2', vehicle: 'Veículo 2', rating: 4.8, price: 60 },
-  ];
+  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
 
-  const handleChooseDriver = async (driverId: number) => {
-    navigate('/historico');
-    // try {
-    //   const response = await fetch('/api/confirm', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ driverId })
-    //   });
-    //   // Redirecionar para a tela de histórico de viagens com os dados recebidos
-    //   history.push('/historico');
-    // } catch (error) {
-    //   console.error('Erro ao confirmar viagem:', error);
-    //   // Exibir mensagem de erro para o usuário
-    // }
-  };
+  const { data, customerId, origin, destination } = location.state;  
+  const { confirmRide, loading } = useRideConfirm();
+  
+  const pointALat = parseFloat(data.origin.latitude.toString()).toFixed(6);
+  const pointALng = parseFloat(data.origin.longitude.toString()).toFixed(6);
+  const pointBLat = parseFloat(data.destination.latitude.toString()).toFixed(6);
+  const pointBLng = parseFloat(data.destination.longitude.toString()).toFixed(6);
+  const drivers: IDriver[] = data.options;
+
+  let completePath = ''
+
+  data.routeResponse.routes[0].legs[0].steps.forEach((route: any) => {
+    const lat = parseFloat(route.startLocation.latLng.latitude.toString()).toFixed(6)
+    const lng = parseFloat(route.startLocation.latLng.longitude.toString()).toFixed(6)
+
+    completePath += (`|${lat},${lng}`)
+  })
+
+  const handleChooseDriver = (driver: IDriver) => {
+    confirmRide({ 
+      customerId, 
+      origin, 
+      destination, 
+      distance: data.distance,
+      duration: data.duration,
+      driver,
+      value: Number((driver.value * (data.distance / 1000)).toFixed(2))
+    });
+  }
 
   return (
     <div>
       <h1 className='text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl mb-14 mt-20'
       >Opções de Viagem</h1>
       
-      <div className='mb-10' id="map">Mapa estático com a rota</div>
+      <div className="mb-10 flex justify-center">
+        <img src={`https://maps.googleapis.com/maps/api/staticmap?size=900x400&markers=color:blue|label:A|${pointALat},${pointALng}&&markers=color:blue|label:B|${pointBLat},${pointBLng}&path=color:blue|weight:5${completePath}7&key=${apiKey}`}
+        alt="Google map" className='rounded-md' 
+        />
+      </div>
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-300">
           <thead className="text-xs text-gray-700 uppercase bg-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-4 py-3">
                 Nome
               </th>
-              <th scope="col" className="px-11 py-3">
+              <th scope="col" className="px-4 py-3">
                 Descrição
               </th>
-              <th scope="col" className="px-6 py-3 text-center">
+              <th scope="col" className="px-4 py-3">
                 Veículo
               </th>
-              <th scope="col" className="px-2 py-3 text-center">
+              <th scope="col" className="px-4 py-3">
                 Avaliação
               </th>
-              <th scope="col" className="px-3 py-3 text-center">
-                Valor da Viagem
+              <th scope="col" className="px-4 py-3 text-center">
+                Valor da viagem
               </th>
               <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Edit</span>
@@ -59,27 +72,27 @@ const TravelOptions: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {drivers.map((driver, index) => (
-              <tr key={index} className="border-b bg-gray-200 text-gray-700">
-                <td className="px-6 py-4 font-medium whitespace-nowrap">
+            {drivers.map((driver) => (
+              <tr key={driver.id} className="border-b bg-gray-200 text-gray-700">
+                <td className="px-4 py-4 font-medium whitespace-nowrap">
                   {driver.name}
                 </td>
-                <td className="px-11 py-4 max-w-xs text-clip">
+                <td className="px-4 py-4 max-w-xs text-clip">
                   {driver.description}
                 </td>
-                <td className="px-6 py-4 text-center">
+                <td className="px-4 py-4 max-w-40">
                   {driver.vehicle}
                 </td>
-                <td className="px-2 py-4 text-center">
-                  {driver.rating}
+                <td className="px-4 py-4 max-w-60 text-clip">
+                  {`${driver.review.rating} - ${driver.review.comment}`}
                 </td>
-                <td className="px-3 py-4 text-center">
-                  {driver.price}
+                <td className="px-4 py-4 text-center">
+                  {`R$${(driver.value * (data.distance / 1000)).toFixed(2)}`}
                 </td>
-                <td className="px-3 py-4 text-center">
-                  <button onClick={() => handleChooseDriver(index)} 
+                <td className="px-4 py-4 text-center">
+                  <button onClick={() => handleChooseDriver(driver)} disabled={loading} 
                   className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                  >Escolher</button>
+                  >{loading ? "Confirmando..." : "Escolher"}</button>
                 </td>
               </tr>
             ))}
