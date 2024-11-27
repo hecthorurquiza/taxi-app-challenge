@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: taxi-app-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin@shopper
+      POSTGRES_DB: taxiappdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - api
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    networks:
+      - api
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - api
+  
+volumes:
+  postgres_data:
+
+networks:
+  api:
+    driver: bridge
