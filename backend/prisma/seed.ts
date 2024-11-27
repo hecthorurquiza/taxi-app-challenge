@@ -36,6 +36,8 @@ async function main() {
     }
   ]
 
+  await prisma.driver.deleteMany({})
+
   await Promise.all(
     drivers.map(async (driver) => {
       await prisma.driver.create({

@@ -15,6 +15,7 @@ services:
 
   backend:
     build: ./backend
+    container_name: taxi-app-backend
     ports:
       - "8080:8080"
     depends_on:
@@ -30,6 +31,7 @@ services:
       dockerfile: Dockerfile
       args:
         - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    container_name: taxi-app-frontend
     ports:
       - "80:80"
     depends_on:
