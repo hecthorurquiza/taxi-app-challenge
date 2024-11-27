@@ -29,7 +29,8 @@ export class EstimateRideUseCase {
 
   async execute(data: IEstimateRouteRequestDTO): Promise<IEstimateRouteResponseDTO> {
     const axiosResponse = await this.getRoute(data.origin, data.destination)
-
+    if (Object.keys(axiosResponse.data).length === 0) throw new Error('Nenhuma rota encontrada para os endereços fornecidos!')
+    
     const distance = axiosResponse.data.routes[0].distanceMeters
 
     const drivers = await this.driverRepository.findMany(distance)

@@ -12,14 +12,19 @@ export class EstimateRideController {
     const error = this.validadeRequest({ customerId: customer_id, origin, destination }, res)
     if (error) return error
     
-    const estimateResp = await this.estimateRideUseCase.execute(
-      {
-        customerId: customer_id,
-        origin: origin as string,
-        destination: destination as string
-      }
-    )
-    return res.status(200).json(estimateResp)
+    try {
+      const estimateResp = await this.estimateRideUseCase.execute(
+        {
+          customerId: customer_id,
+          origin: origin as string,
+          destination: destination as string
+        }
+      )
+      return res.status(200).json(estimateResp)
+    }
+    catch (err: any) {
+      return sendErrorMessage(res, 404, 'NOT_FOUND', err.message)
+    }
   }
 
   private validadeRequest(data: IEstimateRouteRequestDTO, res: Response) {

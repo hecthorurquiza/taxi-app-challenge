@@ -27,7 +27,7 @@ const TravelHistory: React.FC = () => {
         <div className='w-80 px-3'>
           <select className='block w-full bg-gray-200 text-gray-700 border rounded focus:bg-white py-3 px-4' 
           value={driverId} onChange={e => setDriverId(e.target.value)}>
-            <option>Todos</option>
+            <option value="0">Todos</option>
             <option value="1">Homer Simpson</option>
             <option value="2">Dominic Toretto</option>
             <option value="3">James Bond</option>
