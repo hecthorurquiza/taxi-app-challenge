@@ -36,10 +36,11 @@ async function main() {
     }
   ]
 
-  await prisma.driver.deleteMany({})
-
   await Promise.all(
     drivers.map(async (driver) => {
+      const driverDB = await prisma.driver.findUnique({ where: { id: driver.id } })
+      if (driverDB) return
+
       await prisma.driver.create({
         data: driver
       })

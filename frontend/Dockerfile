@@ -2,9 +2,7 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 
-COPY package*.json ./
-COPY tsconfig.json ./
-COPY vite.config.ts ./
+COPY package.json ./
 
 # inject all environment vars we'll need
 ARG GOOGLE_API_KEY
