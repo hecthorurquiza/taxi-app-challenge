@@ -14,14 +14,16 @@ services:
       - api
 
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     container_name: taxi-app-backend
     ports:
       - "8080:8080"
     depends_on:
       - db
-    env_file:
-      - ./.env
     networks:
       - api
 
