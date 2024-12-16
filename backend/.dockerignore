@@ -1,0 +1,6 @@
+.dockerignore
+Dockerfile
+docker-compose.yml
+eslitn*.mjs
+.gitignore
+node_modules

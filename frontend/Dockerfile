@@ -1,27 +1,25 @@
 FROM node:18-alpine AS build
 
-WORKDIR /app
+WORKDIR /usr/app
 
-COPY package.json ./
+COPY package.json yarn.lock ./
 
 # inject all environment vars we'll need
 ARG GOOGLE_API_KEY
 # expose the variable to the finished cotainer
 ENV VITE_GOOGLE_API_KEY=$GOOGLE_API_KEY
 
-RUN npm install
+COPY . .
 
-COPY . /app
-
-RUN npm run build
+RUN yarn
+RUN yarn build
 
 FROM nginx:stable-alpine
 
-# copy nginx configuration in side conf.d folder
-COPY --from=build /app/nginx /etc/nginx/conf.d
+WORKDIR /usr/app
 
-# Copy the build output from the dist folder into the Nginx html directory
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /usr/app/nginx /etc/nginx/conf.d
+COPY --from=build /usr/app/dist /usr/share/nginx/html
 
 EXPOSE 80
 
